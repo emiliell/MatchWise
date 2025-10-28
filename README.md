@@ -26,13 +26,11 @@ MatchWise provides an interface for companies and candidates for matching resume
 
   - After logging in, candidates can easily upload their resumes in PDF format.
   
-  ![Upload Resume](images/Resume upload page.png)
+  ![Upload Resume](images/UploadPage.png)
 
 - **Job description to match:**
 
   - Candidate paste a job description to be matched. Select one of their resumes from the drop-down menu.
-  
-  ![Compare Resume and job description](images/ComparisonPage.png)
 
 - **Matching Results:**
 
