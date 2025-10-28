@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MatchWise · Compare My Resume</title>
+  <style>
+        :root {
+      --bg-1: #0ea5e9; /* cyan-500 */
+      --bg-2: #22c55e; /* emerald-500 */
+      --primary: #2563eb; /* blue-600 */
+      --text: #0f172a; /* slate-900 */
+      --muted: #64748b; /* slate-500 */
+      --card: #ffffff;
+      --ring: rgba(37, 99, 235, 0.35);
+      --shadow: 0 10px 30px rgba(2, 6, 23, 0.15);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    
+    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(255,255,255,0.15), rgba(255,255,255,0)),
+                  linear-gradient(135deg, #0ea5e9, #22c55e); min-height:100vh; }
+    /* Navbar */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
+      border-bottom: 1px solid rgba(255,255,255,0.6);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; }
+    .logo-mark { width: 34px; height: 34px; border-radius: 50%;
+      background: conic-gradient(from 210deg, var(--bg-1), var(--bg-2));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.8), 0 2px 8px rgba(2,6,23,0.15);
+      display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 0.8rem; }
+    .logo-text { font-weight: 800; letter-spacing: -0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 18px; }
+    .nav-a { color: #0b132a; text-decoration: none; font-weight: 600; }
+    .nav-a:hover { text-decoration: underline; }
+    .nav-cta { display: inline-flex; align-items: center; justify-content: center; height: 36px; padding: 0 14px; border-radius: 10px; border: 0; cursor: pointer; background-image: linear-gradient(90deg, var(--primary), var(--bg-2)); color: #fff; box-shadow: 0 6px 12px rgba(34, 197, 94, 0.25); }
+
+    .page { display:grid; place-items:start center; padding:36px 20px 60px }
+    .card { width:100%; max-width:980px; background:#fff; border-radius:16px; box-shadow:0 10px 30px rgba(2,6,23,.15); padding:24px }
+    .label { display:block; margin:.25rem 0 .5rem; font-weight:700 }
+    .input, .select, .textarea { width:100%; border:1px solid #e2e8f0; border-radius:10px; padding:10px 12px }
+    .textarea { min-height:120px; resize:vertical }
+    .btn { display:inline-flex; align-items:center; justify-content:center; height:46px; padding:0 18px; border-radius:10px; border:0; cursor:pointer; font-weight:700;
+      background-image: linear-gradient(90deg, #2563eb, #22c55e); color:#fff; box-shadow:0 8px 16px rgba(34,197,94,.25) }
+    .chips { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px }
+    .chip { background:#eef2ff; color:#3730a3; padding:6px 10px; border-radius:999px; font-weight:600; font-size:.9rem }
+    .badge { background:#f0f9ff; color:#0c4a6e; border-radius:999px; padding:4px 8px; font-size:.85rem; margin-right:6px }
+    .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap }
+  </style>
+</head>
+<body>
+    <header class="nav">
+        <div class="nav-inner">
+          <a class="brand" href="{{ url_for('dashboard') }}">
+            <div class="logo-mark" aria-hidden="true">MW</div>
+            <span class="logo-text">MatchWise</span>
+          </a>
+          <nav class="nav-links">
+            <a class="nav-a" href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a class="nav-a" href="{{ url_for('upload') }}">Upload</a>
+            <a class="nav-a" href="{{ url_for('candidate_compare') }}">Compare</a>
+            <form method="POST" action="{{ url_for('logout') }}" style="display:inline; margin:0">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button class="nav-cta" type="submit">Logout</button>
+            </form>
+          </nav>
+        </div>
+      </header>
+
+  <main class="page">
+    <section class="card">
+      <h1>Compare a resume to a job description</h1>
+      <p class="sub">Pick one of your uploaded resumes, paste a JD, and get a similarity score with matched skills.</p>
+
+      <form method="POST" action="{{ url_for('candidate_compare') }}" novalidate>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <label class="label" for="resume_id">Your resume</label>
+        <select id="resume_id" name="resume_id" class="select" required>
+          <option value="" disabled selected>Select a resume…</option>
+          {% for o in options %}
+            <option value="{{ o.id }}">{{ o.label }}</option>
+          {% endfor %}
+        </select>
+
+        <label class="label" for="job_description" style="margin-top:12px">Job description</label>
+        <textarea id="job_description" name="job_description" class="textarea" placeholder="Paste responsibilities, required skills, and quals...">{{ jd_text or '' }}</textarea>
+
+        <div class="row" style="margin-top:12px">
+          <button class="btn" type="submit">Compare</button>
+          {% if result %}
+            <a class="btn" href="{{ url_for('fetch_resume', resume_id=result.resume_id) }}" target="_blank" rel="noopener">View PDF</a>
+          {% endif %}
+        </div>
+      </form>
+
+      {% if jd_tech %}
+        <h2 style="margin-top:24px">Extracted tech from JD</h2>
+        <div class="chips">
+          {% for t in jd_tech %}
+            <span class="chip">{{ t }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if result %}
+        <h2 style="margin-top:24px">Result</h2>
+        <p><strong>Similarity score:</strong> {{ result.score }}%</p>
+        <p><strong>Success rate:</strong> {{ result.success_rate }}%</p>
+        <p>
+            <strong>Matched skills:</strong>
+            {% if result.matched and result.matched|length > 0 %}
+            {% for s in result.matched %}<span class="badge">{{ s }}</span>{% endfor %}
+            {% else %} — {% endif %}
+        </p>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MatchWise · Login</title>
+  <style>
+    :root {
+      --bg-1: #0ea5e9; /* cyan-500 */
+      --bg-2: #22c55e; /* emerald-500 */
+      --primary: #2563eb; /* blue-600 */
+      --primary-700: #1d4ed8; /* blue-700 */
+      --text: #0f172a; /* slate-900 */
+      --muted: #64748b; /* slate-500 */
+      --card: #ffffff;
+      --ring: rgba(37, 99, 235, 0.35);
+      --shadow: 0 10px 30px rgba(2, 6, 23, 0.15);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(255,255,255,0.15), rgba(255,255,255,0)),
+                  linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .auth-wrap {
+      width: 100%;
+      max-width: 980px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .promo {
+      backdrop-filter: blur(6px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.55), rgba(255,255,255,0.35));
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .logo-mark {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: conic-gradient(from 210deg, var(--bg-1), var(--bg-2));
+      box-shadow: inset 0 0 0 3px rgba(255,255,255,0.8), 0 4px 10px rgba(2,6,23,0.15);
+      display: grid; place-items: center;
+      color: white; font-weight: 800; letter-spacing: -0.02em;
+    }
+    .logo-text { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; }
+
+    .promo h1 {
+      margin: 8px 0 12px;
+      font-size: clamp(1.75rem, 1.2rem + 1.5vw, 2.25rem);
+      line-height: 1.2;
+    }
+    .promo p { color: var(--text); opacity: 0.9; margin: 0 0 20px; }
+
+    .promo-bullets { margin: 12px 0 0; padding: 0; list-style: none; }
+    .promo-bullets li { display: flex; align-items: flex-start; gap: 10px; margin: 10px 0; color: #0b132a; }
+    .promo-bullets .tick { margin-top: 3px; width: 18px; height: 18px; border-radius: 50%; background: #10b981; display: grid; place-items: center; color: white; font-size: 12px; }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .card h2 { margin: 0 0 8px; font-size: 1.5rem; letter-spacing: -0.01em; }
+    .sub { color: var(--muted); margin: 0 0 24px; font-size: 0.95rem; }
+
+    .field { margin-bottom: 16px; }
+    .label { display: block; font-size: 0.9rem; margin-bottom: 8px; color: #0b132a; }
+    .input {
+      width: 100%;
+      height: 44px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #e2e8f0; /* slate-200 */
+      outline: none;
+      transition: box-shadow .2s, border-color .2s;
+      background: #fff;
+    }
+    .input::placeholder { color: #94a3b8; }
+    .input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 5px var(--ring);
+    }
+
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 100%; height: 46px; border: 0; cursor: pointer;
+      border-radius: 10px; font-weight: 700; letter-spacing: 0.01em;
+      background-image: linear-gradient(90deg, var(--primary), var(--bg-2));
+      color: white; box-shadow: 0 8px 16px rgba(34, 197, 94, 0.25);
+      transition: transform .06s ease, box-shadow .2s ease, filter .2s ease;
+      margin-top: 8px;
+    }
+    .btn:hover { filter: brightness(1.03); box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3); }
+    .btn:active { transform: translateY(1px); }
+
+    .meta { color: var(--muted); font-size: 0.9rem; margin-top: 10px; text-align: center; }
+    .link { color: var(--primary); text-decoration: none; font-weight: 600; }
+    .link:hover { text-decoration: underline; }
+
+    
+    @media (max-width: 900px) {
+      .auth-wrap { grid-template-columns: 1fr; max-width: 560px; }
+      .promo { order: 2; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-wrap">
+    <section class="promo" aria-label="MatchWise value proposition">
+      <div class="logo">
+        <div class="logo-mark" aria-hidden="true">MW</div>
+        <div class="logo-text">MatchWise</div>
+      </div>
+      <h1>Smarter job matching for students & early-career talent</h1>
+      <p>MatchWise uses AI-powered NLP to compare resumes with job descriptions, score the fit, and provide clear feedback—so candidates improve faster and recruiters shortlist with confidence.</p>
+      <ul class="promo-bullets">
+        <li><span class="tick">✓</span><span>Instant fit scores with actionable suggestions</span></li>
+        <li><span class="tick">✓</span><span>Ranked applicant lists for faster hiring</span></li>
+        <li><span class="tick">✓</span><span>Simple, student-friendly interface</span></li>
+      </ul>
+    </section>
+
+    
+    <section class="card" aria-label="Login form">
+      <h2>Welcome</h2>
+      <p class="sub">Sign in to continue to MatchWise</p>
+
+      <form method="POST" action="{{ url_for('login') }}" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div class="field">
+          <label class="label" for="email">Email</label>
+          {{ form.email(class="input", id="email", placeholder="name@uni.edu") }}
+        </div>
+
+        <div class="field">
+          <label class="label" for="password">Password</label>
+          {{ form.password(class="input", id="password", placeholder="••••••••") }}
+        </div>
+
+        {{ form.submit(class="btn") }}
+
+        <div class="meta">Don't have an account? <a class="link" href="{{ url_for('register') }}">Register</a></div>
+
+      </form>
+    </section>
+  </div>
+</body>
+</html>

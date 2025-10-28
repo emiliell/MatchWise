@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MatchWise · Home</title>
+  <style>
+    :root{
+      --bg-1:#0ea5e9; --bg-2:#22c55e; --primary:#2563eb; --text:#0f172a; --muted:#64748b;
+      --card:#fff; --ring:rgba(37,99,235,.35); --shadow:0 10px 30px rgba(2,6,23,.15); --radius:16px;
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{
+      margin:0; font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--text);
+      background:radial-gradient(1200px 800px at 10% 10%,rgba(255,255,255,.15),transparent),
+                 linear-gradient(135deg,var(--bg-1),var(--bg-2));
+    }
+
+    /* Navbar */
+    .nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(8px);
+      background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,.6));
+      border-bottom:1px solid rgba(255,255,255,.6)}
+    .nav-inner{max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+    .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+    .logo-mark{width:34px;height:34px;border-radius:50%;
+      background:conic-gradient(from 210deg,var(--bg-1),var(--bg-2));
+      box-shadow:inset 0 0 0 2px rgba(255,255,255,.8),0 2px 8px rgba(2,6,23,.15);
+      display:grid;place-items:center;color:#fff;font-weight:800;font-size:.8rem}
+    .logo-text{font-weight:800;letter-spacing:-.02em}
+    .nav-actions{display:flex;gap:10px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;height:38px;padding:0 14px;border-radius:10px;border:1px solid #e2e8f0;background:#f8fafc;cursor:pointer;font-weight:700;text-decoration:none;color:inherit}
+    .btn:hover{background:#f1f5f9}
+    .btn.primary{border:0;background-image:linear-gradient(90deg,var(--primary),var(--bg-2));color:#fff;box-shadow:0 6px 12px rgba(34,197,94,.25)}
+
+    /* Hero */
+    .hero{max-width:1100px;margin:34px auto 30px;padding:0 20px;display:grid;place-items:center;text-align:center;color:#fff}
+    .hero h1{margin:.2em 0 .3em;font-size:clamp(2rem,1.2rem + 2.5vw,3rem);letter-spacing:-.02em}
+    .hero p{max-width:900px;margin:0 auto 14px;opacity:.95}
+    .hero .cta{margin-top:18px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+    /* Sections */
+    .section{max-width:1100px;margin:0 auto;padding:10px 20px 50px}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+    .card h5{margin:.2em 0 .4em}
+    .card p{color:var(--muted);margin:0 0 12px}
+    .card .btn{height:36px}
+
+    /* Feature bullets */
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+    .feat{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.5);border-radius:14px;padding:16px;color:#082032;backdrop-filter:blur(4px)}
+    .feat strong{display:block;margin-bottom:6px;color:#fff}
+
+    @media (max-width:900px){
+      .cards,.features{grid-template-columns:1fr}
+      .nav-inner{padding:10px 16px}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/">
+        <div class="logo-mark" aria-hidden="true">MW</div>
+        <span class="logo-text">MatchWise</span>
+      </a>
+      <div class="nav-actions">
+        <a class="btn" href="/login">Log in</a>
+        <a class="btn primary" href="/register">Get Started</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Welcome to MatchWise</h1>
+    <p>
+      MatchWise uses AI-powered NLP to compare resumes with job descriptions, score the fit, and give clear, practical feedback—so candidates improve faster and recruiters shortlist with confidence.
+    </p>
+    <div class="cta">
+      <a class="btn primary" href="/register">Get Started</a>
+      <a class="btn primary" href="/login">I already have an account</a>
+    </div>
+  </section>
+
+  <!-- Quick features -->
+  <section class="section">
+    <div class="features">
+      <div class="feat">
+        <strong>Smart matching</strong>
+        Get a clear match score and what to improve.
+      </div>
+      <div class="feat">
+        <strong>Recruiter ranking</strong>
+        Ranked candidate lists per job make shortlisting fast.
+      </div>
+      <div class="feat">
+        <strong>Built for students</strong>
+        Clean, friendly interface for early-career users.
+      </div>
+    </div>
+
+    <!-- Resource cards -->
+    <div class="cards">
+      <article class="card">
+        <h5>Resume: Dos and Don’ts</h5>
+        <p>Tips on how to build a stellar resume.</p>
+        <a class="btn primary" href="https://www.themuse.com/advice/42-resume-dos-and-donts-every-job-seeker-should-know" target="_blank" rel="noopener">Read More</a>
+      </article>
+
+      <article class="card">
+        <h5>Strategies to Hire Employees</h5>
+        <p>Practical steps for effective hiring.</p>
+        <a class="btn primary" href="https://www.forbes.com/advisor/business/how-to-hire-employees/" target="_blank" rel="noopener">Read More</a>
+      </article>
+
+      <article class="card">
+        <h5>Best HR Resources</h5>
+        <p>Top websites and tools for HR teams.</p>
+        <a class="btn primary" href="https://www.bamboohr.com/blog/top-websites-for-hr-professionals" target="_blank" rel="noopener">Read More</a>
+      </article>
+    </div>
+  </section>
+
+</body>
+</html>
