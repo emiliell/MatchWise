@@ -13,9 +13,11 @@ MatchWise provides an interface for companies and candidates for matching resume
 ### User Authentication
 
 - Registration for candidate and company
+![Registration Page](images/RegistrationPage.png)
+
 - Login
 
-![Registration Page](images/RegistrationPage.png)
+![Login Page](images/LoginPage.png)
 
 
 
