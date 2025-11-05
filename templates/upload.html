@@ -107,6 +107,7 @@
         <a class="nav-a" href="{{ url_for('dashboard') }}">Dashboard</a>
         <a class="nav-a" href="{{ url_for('upload') }}">Upload</a>
         <a class="nav-a" href="{{ url_for('candidate_compare') }}">Compare</a>
+        <a class="nav-a" href="{{ url_for('candidate_history') }}">History</a>
         <form method="POST" action="{{ url_for('logout') }}" style="display:inline; margin:0">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <button class="nav-cta" type="submit">Logout</button>
