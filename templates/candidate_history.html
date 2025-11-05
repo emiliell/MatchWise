@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>MatchWise · Compare History</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+        :root {
+      --bg-1: #0ea5e9; /* cyan-500 */
+      --bg-2: #22c55e; /* emerald-500 */
+      --primary: #2563eb; /* blue-600 */
+      --text: #0f172a; /* slate-900 */
+      --muted: #64748b; /* slate-500 */
+      --card: #ffffff;
+      --ring: rgba(37, 99, 235, 0.35);
+      --shadow: 0 10px 30px rgba(2, 6, 23, 0.15);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    
+    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(255,255,255,0.15), rgba(255,255,255,0)),
+                  linear-gradient(135deg, #0ea5e9, #22c55e); min-height:100vh; }
+    /* Navbar */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
+      border-bottom: 1px solid rgba(255,255,255,0.6);
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 12px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; }
+    .logo-mark { width: 34px; height: 34px; border-radius: 50%;
+      background: conic-gradient(from 210deg, var(--bg-1), var(--bg-2));
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.8), 0 2px 8px rgba(2,6,23,0.15);
+      display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 0.8rem; }
+    .logo-text { font-weight: 800; letter-spacing: -0.02em; }
+    .nav-links { display: flex; align-items: center; gap: 18px; }
+    .nav-a { color: #0b132a; text-decoration: none; font-weight: 600; }
+    .nav-a:hover { text-decoration: underline; }
+    .nav-cta { display: inline-flex; align-items: center; justify-content: center; height: 36px; padding: 0 14px; border-radius: 10px; border: 0; cursor: pointer; background-image: linear-gradient(90deg, var(--primary), var(--bg-2)); color: #fff; box-shadow: 0 6px 12px rgba(34, 197, 94, 0.25); }
+
+    .page { display:grid; place-items:start center; padding:36px 20px 60px }
+    .card { width:100%; max-width:1200px; background:#fff; border-radius:16px; box-shadow:0 10px 30px rgba(2,6,23,.15); padding:24px }
+    .label { display:block; margin:.25rem 0 .5rem; font-weight:700 }
+    .input, .select, .textarea { width:100%; border:1px solid #e2e8f0; border-radius:10px; padding:10px 12px }
+    .textarea { min-height:120px; resize:vertical }
+    .btn { display:inline-flex; align-items:center; justify-content:center; height:46px; padding:0 18px; border-radius:10px; border:0; cursor:pointer; font-weight:700;
+      background-image: linear-gradient(90deg, #2563eb, #22c55e); color:#fff; box-shadow:0 8px 16px rgba(34,197,94,.25) }
+    .chips { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px }
+    .chip { background:#eef2ff; color:#3730a3; padding:6px 10px; border-radius:999px; font-weight:600; font-size:.9rem }
+    .badge { background:#f0f9ff; color:#0c4a6e; border-radius:999px; padding:4px 8px; font-size:.85rem; margin-right:6px }
+    .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap }
+
+    .table-wrap{width:100%;overflow:auto;border-radius:12px;border:1px solid #e2e8f0}
+    table{width:100%;border-collapse:collapse;background:#fff}
+    thead th{text-align:left;font-size:.9rem;color:#475569;background:#f8fafc;padding:12px 14px;position:sticky;top:0}
+    tbody td{padding:14px;border-top:1px solid #f1f5f9;vertical-align:top}
+    tbody tr:hover{background:#f9fbff}
+
+    .ok{background:#ecfdf5;color:#065f46}.mid{background:#fffbeb;color:#92400e}.bad{background:#fef2f2;color:#991b1b}
+    .skills{display:flex;flex-wrap:wrap;gap:6px} .chip{background:#eef2ff;color:#3730a3;padding:4px 8px;font-size:.85rem;border-radius:999px}
+ 
+  </style>
+</head>
+<body>
+    <header class="nav">
+        <div class="nav-inner">
+          <a class="brand" href="{{ url_for('dashboard') }}">
+            <div class="logo-mark" aria-hidden="true">MW</div>
+            <span class="logo-text">MatchWise</span>
+          </a>
+          <nav class="nav-links">
+            <a class="nav-a" href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a class="nav-a" href="{{ url_for('upload') }}">Upload</a>
+            <a class="nav-a" href="{{ url_for('candidate_compare') }}">Compare</a>
+            <a class="nav-a" href="{{ url_for('candidate_history') }}">History</a>
+            <form method="POST" action="{{ url_for('logout') }}" style="display:inline; margin:0">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button class="nav-cta" type="submit">Logout</button>
+            </form>
+          </nav>
+        </div>
+      </header>
+
+  <main class="page">
+    <section class="card" aria-label="Compare history">
+      <h1>History</h1>
+      <p class="sub">Every time you compared a resume with a job description.</p>
+
+      {% if records and records|length > 0 %}
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Resume</th>
+              <th>JD Preview</th>
+              <th>JD Skills</th>
+              <th>Matched</th>
+              <th>Match</th>
+              <th>Success</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in records %}
+              {% set score = r['similarity_score'] or 0 %}
+              {% set succ  = r['success_rate'] or 0 %}
+              {% set badge = 'ok' if succ >= 80 else ('mid' if succ >= 60 else 'bad') %}
+              <tr>
+                <td>{{ r['compared_at'].strftime('%Y-%m-%d %H:%M') if r['compared_at'] else '' }}</td>
+                <td>{{ r['resume_filename'] or (r['resume_id_str'][:8] ~ '…') }}</td>
+                <td style="max-width:320px">{{ r['jd_preview'] }}</td>
+                <td>
+                  <div class="skills">
+                    {% for s in r['jd_tech'] %}<span class="chip">{{ s }}</span>{% endfor %}
+                  </div>
+                </td>
+                <td>
+                  <div class="skills">
+                    {% for s in r['matched_skills'] %}<span class="chip">{{ s }}</span>{% endfor %}
+                  </div>
+                </td>
+                <td><span class="badge {{ badge }}">{{ '%.1f'|format(score) }}%</span></td>
+                <td><span class="badge {{ badge }}">{{ '%.1f'|format(succ) }}%</span></td>
+                <td class="row">
+                  {% if r['resume_id_str'] %}
+                    <a class="btn" href="{{ url_for('fetch_resume', resume_id=r['resume_id_str']) }}" target="_blank" rel="noopener">View Resume</a>
+                  {% endif %}
+                </td>
+                <td>
+                    <form method="POST" action="{{ url_for('delete_history_entry', entry_id=r['_id']) }}" style="display:inline-block;">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                      <button class="btn" type="submit" style="background:#475569;color:#fff;">Delete</button>
+                    </form>
+                  </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+
+        <form method="POST" action="{{ url_for('clear_candidate_history') }}" style="margin-bottom:12px;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn" type="submit" style="background:#475569;color:#fff;">Clear Entire History</button>
+        </form>
+
+      {% else %}
+        <p class="sub">No history yet. Use “Compare” to generate your first result.</p>
+      {% endif %}
+    </section>
+  </main>
+</body>
+</html>
