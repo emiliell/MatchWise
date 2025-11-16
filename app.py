@@ -19,6 +19,7 @@ from pdfminer.high_level import extract_text
 from sentence_transformers import SentenceTransformer, util
 import math
 from datetime import datetime, timezone
+import re
 
 
 
@@ -33,6 +34,9 @@ csrf = CSRFProtect(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
+# ===========================================================================================================
+# Templating Helpers
+# ===========================================================================================================
 @app.context_processor
 def inject_csrf_token():
     return dict(csrf_token=generate_csrf)
@@ -41,13 +45,23 @@ def inject_csrf_token():
 # ===========================================================================================================
 # Utility: NLP & Scoring
 # ===========================================================================================================
+
 def extract_tech(nlp, text: str) -> set[str]:
     doc = nlp(text or "")
     tech = []
     for ent in doc.ents:
         if ent.label_ in ["ORG", "TECHNOLOGY", "TECH"]:
-            tech.append(ent.text)
-    return {t.strip().lower() for t in set(tech) if t.strip()}
+            # Clean up and filter
+            token = ent.text.strip().lower()
+            # Ignore symbols, digits, and short strings
+            if len(token) < 2:
+                continue
+            if not re.search(r'[a-zA-Z]', token):
+                continue
+            if re.match(r'^[\W_]+$', token):  # only non-word characters
+                continue
+            tech.append(token)
+    return set(tech)
 
 def extract_pdf_text(file_storage) -> str:
     data = file_storage.read()
