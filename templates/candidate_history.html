@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MatchWise · Compare My Resume</title>
+  <meta charset="utf-8">
+  <title>MatchWise · Compare History</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
         :root {
       --bg-1: #0ea5e9; /* cyan-500 */
@@ -46,7 +46,7 @@
     .nav-cta { display: inline-flex; align-items: center; justify-content: center; height: 36px; padding: 0 14px; border-radius: 10px; border: 0; cursor: pointer; background-image: linear-gradient(90deg, var(--primary), var(--bg-2)); color: #fff; box-shadow: 0 6px 12px rgba(34, 197, 94, 0.25); }
 
     .page { display:grid; place-items:start center; padding:36px 20px 60px }
-    .card { width:100%; max-width:980px; background:#fff; border-radius:16px; box-shadow:0 10px 30px rgba(2,6,23,.15); padding:24px }
+    .card { width:100%; max-width:1200px; background:#fff; border-radius:16px; box-shadow:0 10px 30px rgba(2,6,23,.15); padding:24px }
     .label { display:block; margin:.25rem 0 .5rem; font-weight:700 }
     .input, .select, .textarea { width:100%; border:1px solid #e2e8f0; border-radius:10px; padding:10px 12px }
     .textarea { min-height:120px; resize:vertical }
@@ -57,11 +57,20 @@
     .badge { background:#f0f9ff; color:#0c4a6e; border-radius:999px; padding:4px 8px; font-size:.85rem; margin-right:6px }
     .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap }
 
-    .skills { display:flex; flex-wrap:wrap; gap:6px; }
-    .inline-more { display:inline-block; margin-left:6px; }
-    .inline-more > summary { cursor:pointer; display:inline; list-style:none; color:#0f766e; font-weight:700; }
-    .inline-more > summary::-webkit-details-marker { display:none; }
-    .skills-all { margin-top:8px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:8px; max-width:720px; }
+    .table-wrap{width:100%;overflow:auto;border-radius:12px;border:1px solid #e2e8f0}
+    table{width:100%;border-collapse:collapse;background:#fff}
+    thead th{text-align:left;font-size:.9rem;color:#475569;background:#f8fafc;padding:12px 14px;position:sticky;top:0}
+    tbody td{padding:14px;border-top:1px solid #f1f5f9;vertical-align:top}
+    tbody tr:hover{background:#f9fbff}
+
+    .ok{background:#ecfdf5;color:#065f46}.mid{background:#fffbeb;color:#92400e}.bad{background:#fef2f2;color:#991b1b}
+    .skills{display:flex; flex-wrap:wrap; gap:6px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:8px}
+    .inline-more { display:inline-block; margin-left:6px}
+    .inline-more > summary { cursor:pointer; display:inline; list-style:none; color:#0f766e; font-weight:700}
+    .inline-more > summary::-webkit-details-marker { display:none}
+    .skills-all { margin-top:8px; max-width:520px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:8px}
+  
+
   </style>
 </head>
 <body>
@@ -85,79 +94,102 @@
       </header>
 
   <main class="page">
-    <section class="card">
-      <h1>Compare a resume to a job description</h1>
-      <p class="sub">Pick one of your uploaded resumes, paste a JD, and get a similarity score with matched skills.</p>
+    <section class="card" aria-label="Compare history">
+      <h1>History</h1>
+      <p class="sub">Every time you compared a resume with a job description.</p>
 
-      <form method="POST" action="{{ url_for('candidate_compare') }}" novalidate>
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
-        <label class="label" for="resume_id">Your resume</label>
-        <select id="resume_id" name="resume_id" class="select" required>
-          <option value="" disabled selected>Select a resume…</option>
-          {% for o in options %}
-            <option value="{{ o.id }}">{{ o.label }}</option>
-          {% endfor %}
-        </select>
-
-        <label class="label" for="job_description" style="margin-top:12px">Job description</label>
-        <textarea id="job_description" name="job_description" class="textarea" placeholder="Paste responsibilities, required skills, and quals...">{{ jd_text or '' }}</textarea>
-
-        <div class="row" style="margin-top:12px">
-          <button class="btn" type="submit">Compare</button>
-          {% if result %}
-            <a class="btn" href="{{ url_for('fetch_resume', resume_id=result.resume_id) }}" target="_blank" rel="noopener">View PDF</a>
-          {% endif %}
-        </div>
-      </form>
-
-      {% if jd_tech %}
-        <h2 style="margin-top:24px">Extracted tech from JD ({{ jd_tech|length }})</h2>
-        {% set maxn = 10 %}
-        <div class="skills">
-          {% for s in jd_tech[:maxn] %}
-            <span class="chip">{{ s }}</span>
-          {% endfor %}
-
-          {% if jd_tech|length > maxn %}
-            <details class="inline-more">
-              <summary>+{{ jd_tech|length - maxn }} more</summary>
-              <div class="skills skills-all">
-                {% for s in jd_tech %}
-                  <span class="chip">{{ s }}</span>
-                {% endfor %}
-              </div>
-            </details>
-          {% endif %}
-        </div>
-      {% endif %}
-
-      {% if result %}
-        <h2 style="margin-top:24px">Result</h2>
-        <p><strong>Similarity score:</strong> {{ result.score }}%</p>
-        <p><strong>Success rate:</strong> {{ result.success_rate }}%</p>
-        <p>
-            <strong>Matched skills ({{ result.matched|length }}/{{ jd_tech|length }})</strong>
-            {% set maxm = 10 %}
-            <div class="skills">
-              {% for s in result.matched[:maxm] %}
-                <span class="chip">{{ s }}</span>
-              {% endfor %}
-
-              {% if result.matched|length > maxm %}
-                <details class="inline-more">
-                  <summary>+{{ result.matched|length - maxm }} more</summary>
-                  <div class="skills skills-all">
-                    {% for s in result.matched %}
+      {% if records and records|length > 0 %}
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Resume</th>
+              <th>JD Preview</th>
+              <th>JD Skills</th>
+              <th>Matched</th>
+              <th>Match</th>
+              <th>Success</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in records %}
+              {% set score = r['similarity_score'] or 0 %}
+              {% set succ  = r['success_rate'] or 0 %}
+              {% set badge = 'ok' if succ >= 80 else ('mid' if succ >= 60 else 'bad') %}
+              <tr>
+                <td>{{ r['compared_at'].strftime('%Y-%m-%d %H:%M') if r['compared_at'] else '' }}</td>
+                <td>{{ r['resume_filename'] or (r['resume_id_str'][:8] ~ '…') }}</td>
+                <td style="max-width:320px">{{ r['jd_preview'] }}</td>
+                <td>
+                  {% set maxn = 10 %}
+                  <div class="skills">
+                    {% for s in r['jd_tech'][:maxn] %}
                       <span class="chip">{{ s }}</span>
                     {% endfor %}
+                
+                    {% if r['jd_tech']|length > maxn %}
+                      <details class="inline-more">
+                        <summary>+{{ r['jd_tech']|length - maxn }} more</summary>
+                        <div class="skills skills-all">
+                          {% for s in r['jd_tech'] %}
+                            <span class="chip">{{ s }}</span>
+                          {% endfor %}
+                        </div>
+                      </details>
+                    {% endif %}
                   </div>
-                </details>
-              {% endif %}
-            </div>
-        </p>
+                </td>
+                <td>
+                  {% set maxm = 8 %}
+                  <div class="skills">
+                    {% for s in r['matched_skills'][:maxm] %}
+                      <span class="chip">{{ s }}</span>
+                    {% endfor %}
+                
+                    {% if r['matched_skills']|length > maxm %}
+                      <details class="inline-more">
+                        <summary>+{{ r['matched_skills']|length - maxm }} more</summary>
+                        <div class="skills skills-all">
+                          {% for s in r['matched_skills'] %}
+                            <span class="chip">{{ s }}</span>
+                          {% endfor %}
+                        </div>
+                      </details>
+                    {% endif %}
+                  </div>
+                </td>                
+                <td><span class="badge {{ badge }}">{{ '%.1f'|format(score) }}%</span></td>
+                <td><span class="badge {{ badge }}">{{ '%.1f'|format(succ) }}%</span></td>
+                <td class="row">
+                  {% if r['resume_id_str'] %}
+                    <a class="btn" href="{{ url_for('fetch_resume', resume_id=r['resume_id_str']) }}" target="_blank" rel="noopener">View Resume</a>
+                  {% endif %}
+                </td>
+                <td>
+                    <form method="POST" action="{{ url_for('delete_history_entry', entry_id=r['_id']) }}" style="display:inline-block;">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                      <button class="btn" type="submit" style="background:#475569;color:#fff;">Delete</button>
+                    </form>
+                  </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+
+        <form method="POST" action="{{ url_for('clear_candidate_history') }}" style="margin-bottom:12px;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn" type="submit" style="background:#475569;color:#fff;">Clear Entire History</button>
+        </form>
+
+      {% else %}
+        <p class="sub">No history yet. Use “Compare” to generate your first result.</p>
       {% endif %}
     </section>
   </main>
 </body>
 </html>
+
