@@ -49,7 +49,7 @@ MatchWise provides an interface for companies and candidates for matching resume
   
   ![View History prior to comparison process](images/candidateView_history1.png)
 
-  ![View History with 2 records](images/candidateView_history3.png)
+  ![View History with 1 record](images/candidateView_history2.png)
 
 
 ### For Companies
@@ -70,7 +70,7 @@ MatchWise provides an interface for companies and candidates for matching resume
 
 - **View History:**
 
-  - Display match history including top 3 candidates and options to re-run and delete records.
+  - Display match history including top 3 candidates and options to view the full run results and delete records.
   
   ![View History prior to match process](images/companyView_history1.png)
 
