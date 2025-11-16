@@ -1,4 +1,4 @@
-<!doctype html>
+!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -62,10 +62,16 @@
     tbody tr:hover{background:#f9fbff}
 
     .ok{background:#ecfdf5;color:#065f46}.mid{background:#fffbeb;color:#92400e}.bad{background:#fef2f2;color:#991b1b}
-    .skills{display:flex;flex-wrap:wrap;gap:6px} .chip{background:#eef2ff;color:#3730a3;padding:4px 8px;font-size:.85rem;border-radius:999px}
-
+    .skills{display:flex;flex-wrap:wrap;gap:6px}
     details{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px}
     details>summary{cursor:pointer;font-weight:600}
+
+
+    .inline-more { display:inline-block; margin-left:6px; }
+    .inline-more > summary { cursor:pointer; display:inline; list-style:none; color:#0f766e; font-weight:700; }
+    .inline-more > summary::-webkit-details-marker { display:none; }
+    .skills-all { margin-top:8px; max-width:520px; }
+
   </style>
 </head>
 <body>
@@ -110,29 +116,39 @@
                     <td>{{ r['ran_at'].strftime('%Y-%m-%d %H:%M') if r['ran_at'] else '' }}</td>
                     <td style="max-width:340px">{{ r['jd_preview'] }}</td>
                     <td>
-                        <div class="skills">
-                        {% for s in r['jd_tech'] %}
-                            <span class="chip">{{ s }}</span>
+                      {% set maxn = 10 %}
+                      <div class="skills">
+                        {% for s in r.jd_tech[:maxn] %}
+                          <span class="chip">{{ s }}</span>
                         {% endfor %}
-                        </div>
+                    
+                        {% if r.jd_tech|length > maxn %}
+                          <details class="inline-more">
+                            <summary>+{{ r.jd_tech|length - maxn }} more</summary>
+                            <div class="skills skills-all" style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:8px;">
+                              {% for s in r.jd_tech %}
+                                <span class="chip">{{ s }}</span>
+                              {% endfor %}
+                            </div>
+                          </details>
+                        {% endif %}
+                      </div>
                     </td>
                     <td>
-                        {% if r['top3'] and r['top3']|length > 0 %}
-                        <div>
-                            {% for t in r['top3'] %}
-                            {% set badge = 'ok' if (t['success_rate'] or 0) >= 80 else ('mid' if (t['success_rate'] or 0) >= 60 else 'bad') %}
-                            <div style="margin-bottom:6px">
-                                <strong>{{ t['candidate_name'] or 'Candidate' }}</strong>
-                                — <span class="badge {{ badge }}">{{ '%.1f'|format(t['match_score'] or 0) }}% / {{ '%.1f'|format(t['success_rate'] or 0) }}%</span>
-                                {% if t['resume_id'] %}
-                                <a class="btn" href="{{ url_for('fetch_resume', resume_id=t['resume_id']) }}" target="_blank" rel="noopener">Resume</a>
-                                {% endif %}
+                      {% for c in r.top3 %}
+                        <div style="margin-bottom:6px;">
+                          <strong>{{ c.candidate_name }}</strong><br>
+                          <span style="color:#2563eb; font-weight:600;">Match:</span> {{ c.match_score }}% &nbsp;
+                          <span style="color:#059669; font-weight:600;">Success:</span> {{ c.success_rate }}%
+                          {% if c.resume_id %}
+                            <div style="margin-top:4px;">
+                              <a class="btn" href="{{ url_for('fetch_resume', resume_id=c.resume_id) }}" target="_blank">
+                                View Resume
+                              </a>
                             </div>
-                            {% endfor %}
+                          {% endif %}
                         </div>
-                        {% else %}
-                        —
-                        {% endif %}
+                      {% endfor %}
                     </td>
                     <td class="row">
                         <details>
@@ -179,3 +195,4 @@
   </main>
 </body>
 </html>
+
