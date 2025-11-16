@@ -56,6 +56,12 @@
     .chip { background:#eef2ff; color:#3730a3; padding:6px 10px; border-radius:999px; font-weight:600; font-size:.9rem }
     .badge { background:#f0f9ff; color:#0c4a6e; border-radius:999px; padding:4px 8px; font-size:.85rem; margin-right:6px }
     .row { display:flex; gap:12px; align-items:center; flex-wrap:wrap }
+
+    .skills { display:flex; flex-wrap:wrap; gap:6px; }
+    .inline-more { display:inline-block; margin-left:6px; }
+    .inline-more > summary { cursor:pointer; display:inline; list-style:none; color:#0f766e; font-weight:700; }
+    .inline-more > summary::-webkit-details-marker { display:none; }
+    .skills-all { margin-top:8px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:8px; max-width:720px; }
   </style>
 </head>
 <body>
@@ -106,11 +112,23 @@
       </form>
 
       {% if jd_tech %}
-        <h2 style="margin-top:24px">Extracted tech from JD</h2>
-        <div class="chips">
-          {% for t in jd_tech %}
-            <span class="chip">{{ t }}</span>
+        <h2 style="margin-top:24px">Extracted tech from JD ({{ jd_tech|length }})</h2>
+        {% set maxn = 10 %}
+        <div class="skills">
+          {% for s in jd_tech[:maxn] %}
+            <span class="chip">{{ s }}</span>
           {% endfor %}
+
+          {% if jd_tech|length > maxn %}
+            <details class="inline-more">
+              <summary>+{{ jd_tech|length - maxn }} more</summary>
+              <div class="skills skills-all">
+                {% for s in jd_tech %}
+                  <span class="chip">{{ s }}</span>
+                {% endfor %}
+              </div>
+            </details>
+          {% endif %}
         </div>
       {% endif %}
 
@@ -119,13 +137,28 @@
         <p><strong>Similarity score:</strong> {{ result.score }}%</p>
         <p><strong>Success rate:</strong> {{ result.success_rate }}%</p>
         <p>
-            <strong>Matched skills:</strong>
-            {% if result.matched and result.matched|length > 0 %}
-            {% for s in result.matched %}<span class="badge">{{ s }}</span>{% endfor %}
-            {% else %} — {% endif %}
+            <strong>Matched skills ({{ result.matched|length }}/{{ jd_tech|length }})</strong>
+            {% set maxm = 10 %}
+            <div class="skills">
+              {% for s in result.matched[:maxm] %}
+                <span class="chip">{{ s }}</span>
+              {% endfor %}
+
+              {% if result.matched|length > maxm %}
+                <details class="inline-more">
+                  <summary>+{{ result.matched|length - maxm }} more</summary>
+                  <div class="skills skills-all">
+                    {% for s in result.matched %}
+                      <span class="chip">{{ s }}</span>
+                    {% endfor %}
+                  </div>
+                </details>
+              {% endif %}
+            </div>
         </p>
       {% endif %}
     </section>
   </main>
 </body>
 </html>
+
