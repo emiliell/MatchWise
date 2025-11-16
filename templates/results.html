@@ -113,7 +113,7 @@
           <thead>
             <tr>
               <th>Rank</th>
-              <th>Job Title</th>
+              <th>Candidate Name</th>
               <th>Match Score</th>
               <th>Required Skills</th>
               <th>Actions</th>
@@ -126,7 +126,7 @@
               {% set badge = 'ok' if score >= 80 else ('mid' if score >= 60 else 'bad') %}
               <tr>
                 <td class="rank">#{{ loop.index }}</td>
-                <td>{{ result['job']['title'] }}</td>
+                <td>{{ result['candidate_name'] }}</td>
                 <td>
                   <span class="badge {{ badge }}">{{ pct }}</span>
                 </td>
@@ -157,9 +157,8 @@
       {% else %}
         <div class="empty">
           <h3>No matching resumes found</h3>
-          <p>Try broadening the required skills or uploading more resumes.</p>
+          <p>Try broadening the required skills.</p>
           <div style="margin-top:12px">
-            <a class="btn" href="{{ url_for('upload') }}">Upload resumes</a>
             <a class="btn" href="{{ url_for('match') }}">Try another job description</a>
           </div>
         </div>
