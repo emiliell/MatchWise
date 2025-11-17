@@ -1,0 +1,122 @@
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+1. Job Description for ExampleResume.pdf
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Use Python and SQL to perform exploratory data analysis and generate insights.
+Build and maintain interactive dashboards using Tableau and Excel to communicate findings.
+Conduct trend analysis and present data summaries to non-technical audiences.
+
+Python, SQL, JavaScript
+Tableau, Jupyter Notebook, Excel (including Pivot Tables & Lookup functions)
+AWS (S3 and related services), BigQuery or similar cloud query engines
+Familiarity with PHP or HTML/CSS for basic data-driven web pages.
+
+
+
+
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+2. Job Description for dummy_resume.pdf
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Overview
+CloudEdge Technologies is seeking a talented Full-Stack Developer to join our growing software team. The successful candidate will have strong experience in Python, React.js, Flask, and Node.js, with a passion for building scalable, cloud-based applications. You’ll collaborate closely with designers and backend engineers to deliver innovative digital solutions for enterprise clients.
+
+Key Responsibilities
+* Develop and maintain end-to-end web applications using Python, Flask, and React.js.
+* Design, build, and deploy RESTful APIs and microservices in Node.js and Express.
+* Integrate front-end components with backend systems and cloud environments (AWS, S3, EC2).
+* Manage and query databases such as MySQL, PostgreSQL, and MongoDB.
+* Implement containerized deployments using Docker and CI/CD pipelines (GitHub Actions).
+* Collaborate in Agile/Scrum teams and participate in sprint planning, code reviews, and stand-ups.
+* Optimize application performance and scalability across multiple environments.
+* Apply unit testing and debugging best practices using PyTest and Jest.
+
+
+Required Skills & Qualifications
+Bachelor’s degree in Computer Science, Software Engineering, or related field.
+2+ years of professional experience in full-stack web development.
+Proficiency in:
+* Languages: Python, JavaScript (ES6+), SQL
+* Frameworks: Flask, Django, React.js, Node.js, Express
+* Databases: MySQL, PostgreSQL, MongoDB
+* Tools: Git, Docker, GitHub Actions, AWS
+Familiarity with Agile development, CI/CD pipelines, and REST API design.
+Experience deploying applications to AWS Lambda, EC2, or similar platforms.
+Knowledge of Linux command-line tools and container orchestration.
+
+
+
+
+
+
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+3. Job Description for Resume1.pdf
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+About the Role
+We are hiring a Full-Stack Software Engineer experienced in Python, Flask, React.js, and Node.js to design, develop, and deploy scalable web applications. The role requires hands-on knowledge of RESTful API design, AWS cloud deployment, and CI/CD automation using GitHub Actions and Docker.
+
+Key Responsibilities
+* Develop and maintain front-end interfaces in React.js and back-end APIs using Flask and Node.js.
+* Integrate MySQL, PostgreSQL, and MongoDB databases with application back-ends.
+* Implement CI/CD pipelines for automated deployment and testing using GitHub Actions.
+* Manage AWS (EC2, S3, Lambda) resources to support scalable cloud operations.
+* Collaborate with cross-functional teams in an Agile/Scrum environment.
+* Conduct unit testing with PyTest and Jest to ensure code quality.
+* Participate in code reviews, feature planning, and sprint retrospectives.
+
+Required Skills & Qualifications
+* Bachelor’s degree in Computer Science or related field.
+* 2+ years of experience in full-stack development using Python, Flask, React.js, and Node.js.
+* Strong knowledge of REST API design, SQL/NoSQL databases, and AWS deployment.
+* Familiarity with Docker, Git, GitHub Actions, and CI/CD processes.
+* Excellent communication and teamwork skills.
+
+Preferred
+* Experience in Django and Express.js frameworks.
+* Exposure to Agile methodology and collaborative software development workflows.
+
+
+
+
+
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+4. Job Description for Resume9.pdf
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+About the Role
+We are looking for a Data Scientist / Machine Learning Engineer experienced in Python, TensorFlow, and scikit-learn to develop and deploy predictive models for business intelligence applications. The ideal candidate will have hands-on experience with data analysis, visualization, and model deployment using Flask and AWS.
+
+Key Responsibilities
+* Build, train, and evaluate machine learning models using TensorFlow and scikit-learn.
+* Perform data preprocessing, feature engineering, and statistical analysis using Pandas and NumPy.
+* Design Flask-based APIs for integrating ML models into production systems.
+* Create and maintain data pipelines using PostgreSQL, AWS S3, and ETL frameworks.
+* Generate interactive data visualizations using Power BI, Tableau, and Matplotlib.
+* Collaborate with cross-functional teams in an Agile setting to deliver data-driven solutions.
+* Deploy machine learning models to AWS EC2 and Docker containers for scalability.
+
+Required Skills & Qualifications
+* Bachelor’s degree in Computer Science, Data Science, or related field.
+* Strong programming skills in Python and SQL.
+* Proficiency with TensorFlow, scikit-learn, Pandas, and NumPy.
+* Knowledge of Flask, AWS, and Docker for model deployment.
+* Excellent understanding of machine learning workflows and data visualization tools.
+
+Preferred
+* Experience with deep learning and neural network optimization.
+* Familiarity with Tableau, Power BI, or other BI platforms.
+

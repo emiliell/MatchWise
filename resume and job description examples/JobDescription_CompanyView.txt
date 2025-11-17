@@ -1,0 +1,28 @@
+About the Role
+Seeking a skilled Full-Stack Developer proficient in Python, Flask, React.js, and Node.js to design and implement scalable, cloud-based applications. The ideal candidate will have hands-on experience with REST API development, database integration, and AWS deployment, with a strong focus on code quality, performance, and maintainability.
+
+Key Responsibilities
+* Develop, test, and deploy full-stack web applications using Python, Flask, and React.js.
+* Design and build RESTful APIs with Node.js and Express, integrating them into modern front-end frameworks.
+* Manage database operations with MySQL, PostgreSQL, and MongoDB, including schema design and query optimization.
+* Implement containerization and deployment pipelines using Docker and GitHub Actions for continuous integration and delivery (CI/CD).
+* Configure and maintain AWS infrastructure (EC2, S3, Lambda) for application hosting and scalability.
+* Write modular, maintainable code following Agile development methodologies.
+* Collaborate with UI/UX designers, QA engineers, and product managers to deliver seamless user experiences.
+* Conduct code reviews, implement testing best practices, and contribute to team knowledge sharing.
+
+Required Skills & Qualifications
+* Bachelor’s degree in Computer Science, Software Engineering, or equivalent practical experience.
+* 3+ years of professional experience as a Full-Stack Developer or Software Engineer.
+* Proficiency in:
+    * Front-End: React.js, HTML5, CSS3, JavaScript (ES6+).
+    * Back-End: Python (Flask/Django), Node.js, Express.js.
+    * Databases: MySQL, PostgreSQL, MongoDB.
+    * Tools & Cloud: AWS, Docker, Git, GitHub Actions, REST APIs.
+* Familiarity with CI/CD, Agile/Scrum, and version control best practices.
+* Excellent debugging and problem-solving skills.
+
+Preferred Qualifications
+* Experience with TypeScript, Next.js, or GraphQL.
+* Knowledge of microservices architecture and API gateway design.
+* Exposure to automated testing (PyTest, Jest, Cypress).
